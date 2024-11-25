@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Modal } from 'react-na
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import SavedPassword from './src/screens/SavedPasswords';
+import SavedPasswords from './src/screens/SavedPasswords';
 import { ModalPassword } from './src/components/modal/index';
 
  
@@ -16,7 +16,7 @@ function HomeScreen({ navigation }) {
   const [senhaGerada, setSenhaGerada] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [savedPasswords, setSavedPasswords] = useState([]);
- }
+ 
 
   function gerarSenha() {
     let senha = "";
@@ -28,19 +28,20 @@ function HomeScreen({ navigation }) {
     setModalVisible(true)
  
   }
+
   function salvarSenha() {
     setSavedPasswords(prevPasswords => {
       const updatePasswords = [...prevPasswords, senhaGerada];
       setModalVisible(false);
       navigation.navigate('SavedPasswords', {savedPasswords: updatePasswords});
       return updatePasswords;
-    })
+    });
   }
   
   return (
     <View style={styles.container}>
       <Image
-        source={require("./src/img/logolock.png")}
+        source={require("./src/img/logo.png")}
         style={styles.logo}
       />
       <Text style={styles.title}>LockGen</Text>
@@ -52,13 +53,14 @@ function HomeScreen({ navigation }) {
       </Modal>
     </View>
   );
+}
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="SavedPasswords" components={SavedPasswords}/>
+        <Stack.Screen name="SavedPasswords" component={SavedPasswords}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
